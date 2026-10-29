@@ -8,3 +8,9 @@
 @media(max-width:600px){.photo-gallery{height:220px;min-height:0}.project-photo{height:100%;min-height:0}}
 /* Stretch each gallery cell to give its absolutely positioned image a real box. */
 .photo-gallery{place-items:stretch}.photo-gallery .project-photo{width:100%;min-width:0}
+
+/* Fixed gallery sizing prevents source-photo dimensions from affecting card layout. */
+.photo-gallery{display:flex;align-items:stretch;place-items:initial;align-self:center;width:100%;height:290px;min-height:0;max-height:290px;overflow:hidden}
+.photo-gallery .project-photo{position:relative;flex:1 1 0;width:auto;height:100%;min-width:0;min-height:0}
+.photo-gallery .project-photo img{display:block;width:100%;height:100%;max-width:100%;max-height:100%;object-fit:cover}
+@media(max-width:600px){.photo-gallery{align-self:stretch;height:220px;min-height:0;max-height:220px}.photo-gallery .project-photo{height:100%;min-height:0}}
