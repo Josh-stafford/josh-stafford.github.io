@@ -20,3 +20,24 @@ if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-mot
   }), { threshold: 0.12 });
   revealItems.forEach(item => observer.observe(item));
 } else revealItems.forEach(item => item.classList.add('is-visible'));
+
+const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+if (finePointer.matches && !reduceMotion.matches) {
+  const bindTilt = (element, prefix, max = 2.5) => {
+    element.addEventListener('pointermove', event => {
+      const box = element.getBoundingClientRect();
+      const x = (event.clientX - box.left) / box.width - 0.5;
+      const y = (event.clientY - box.top) / box.height - 0.5;
+      element.style.setProperty(`--${prefix}-tilt-x`, `${(x * max * 2).toFixed(2)}deg`);
+      element.style.setProperty(`--${prefix}-tilt-y`, `${(-y * max * 2).toFixed(2)}deg`);
+    });
+    element.addEventListener('pointerleave', () => {
+      element.style.removeProperty(`--${prefix}-tilt-x`);
+      element.style.removeProperty(`--${prefix}-tilt-y`);
+    });
+  };
+  document.querySelectorAll('.project-card').forEach(card => bindTilt(card, 'card', 1.4));
+  const portrait = document.querySelector('.hero-visual');
+  if (portrait) bindTilt(portrait, 'portrait', 1.7);
+}

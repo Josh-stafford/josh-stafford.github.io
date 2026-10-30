@@ -14,3 +14,26 @@
 .photo-gallery .project-photo{position:relative;flex:1 1 0;width:auto;height:100%;min-width:0;min-height:0}
 .photo-gallery .project-photo img{display:block;width:100%;height:100%;max-width:100%;max-height:100%;object-fit:cover}
 @media(max-width:600px){.photo-gallery{align-self:stretch;height:220px;min-height:0;max-height:220px}.photo-gallery .project-photo{height:100%;min-height:0}}
+
+/* A little more motion and depth in the opening scene. */
+.hero-visual::before{content:"";position:absolute;width:76%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(198,243,107,.11),rgba(72,113,94,.06) 40%,transparent 70%);filter:blur(10px);animation:hero-glow 6s ease-in-out infinite alternate}
+.orbit-one{animation:orbit-drift 34s linear infinite}.orbit-two{animation:orbit-drift-reverse 46s linear infinite}
+.orbit::after{content:"";position:absolute;left:50%;top:0;width:7px;height:7px;border-radius:50%;background:var(--orange);box-shadow:0 0 16px rgba(243,155,112,.8);transform:translate(-50%,-50%)}
+.portrait-frame{transition:transform .65s cubic-bezier(.2,.7,.2,1),box-shadow .65s}.hero-visual:hover .portrait-frame{transform:translateY(-5px) scale(1.012);box-shadow:0 32px 100px #0008,0 0 40px rgba(198,243,107,.08)}
+.hero-hud{position:absolute;z-index:4;right:-1%;bottom:25%;width:190px;padding:13px 15px;background:rgba(19,29,30,.92);border:1px solid rgba(198,243,107,.25);box-shadow:0 12px 35px #0005;backdrop-filter:blur(10px);animation:hud-float 5.5s ease-in-out infinite}
+.hud-kicker{display:flex;align-items:center;gap:9px;color:#91a098;font:8px var(--mono);letter-spacing:.1em}.hud-kicker .pulse{width:5px;height:5px}.hero-hud strong{display:block;margin-top:8px;font-size:14px;letter-spacing:-.03em;font-weight:600}.hud-caption{display:block;color:#87958d;font:8px var(--mono);margin-top:2px}.hud-meter{height:18px;display:flex;align-items:end;gap:4px;margin-top:8px}.hud-meter i{display:block;width:7px;height:40%;background:#789b55;opacity:.6;animation:meter 1.3s ease-in-out infinite alternate}.hud-meter i:nth-child(3n){height:85%;background:var(--lime);opacity:.9}.hud-meter i:nth-child(2n){animation-delay:.3s}.hud-meter i:nth-child(4n){animation-delay:.6s}
+.project-card{transition:border-color .3s,box-shadow .35s,transform .35s}.project-card:hover{border-color:#52654e;box-shadow:0 20px 55px rgba(0,0,0,.2);transform:translateY(-4px)}.project-visual{isolation:isolate}.api-visual::after{content:"";position:absolute;z-index:0;left:0;right:0;top:-30%;height:20%;background:linear-gradient(180deg,transparent,rgba(198,243,107,.09),transparent);animation:scan 6s ease-in-out infinite;pointer-events:none}.api-window{z-index:1}
+@keyframes orbit-drift{from{transform:rotate(-23deg) scaleY(.54)}to{transform:rotate(337deg) scaleY(.54)}}@keyframes orbit-drift-reverse{from{transform:rotate(58deg) scaleY(.48)}to{transform:rotate(-302deg) scaleY(.48)}}@keyframes hud-float{0%,100%{translate:0 0}50%{translate:0 -7px}}@keyframes hero-glow{from{opacity:.65;transform:scale(.94)}to{opacity:1;transform:scale(1.04)}}@keyframes meter{from{transform:scaleY(.55);transform-origin:bottom}to{transform:scaleY(1);transform-origin:bottom}}@keyframes scan{0%,15%{top:-30%}75%,100%{top:115%}}
+@media(max-width:800px){.hero-hud{right:0;bottom:19%;transform:scale(.92);transform-origin:right bottom}}
+@media(max-width:600px){.hero-hud{right:-2%;bottom:14%;width:165px;padding:10px 12px}.hero-hud strong{font-size:12px}.tag-top{right:-1%}}
+@media(prefers-reduced-motion:reduce){.orbit-one,.orbit-two,.hero-hud,.hero-visual::before,.hud-meter i,.api-visual::after{animation:none!important}.portrait-frame,.project-card{transition:none!important}}
+
+/* Subtle pointer depth on capable devices. */
+@media(hover:hover) and (pointer:fine){.hero-visual:hover .portrait-frame{transform:perspective(900px) rotateY(var(--portrait-tilt-x,0deg)) rotateX(var(--portrait-tilt-y,0deg)) translateY(-5px) scale(1.012)}.project-card{transform-style:preserve-3d;will-change:transform}.project-card:hover{transform:perspective(1200px) rotateX(var(--card-tilt-y,0deg)) rotateY(var(--card-tilt-x,0deg)) translateY(-4px)}}
+/* Keep the focus panel well clear of the lower portrait label. */
+.hero-hud{bottom:32%}
+@media(max-width:800px){.hero-hud{bottom:32%}}
+@media(max-width:600px){.hero-hud{bottom:32%}}
+/* The focus panel now sits in the text column, never over the portrait. */
+.hero-copy .hero-hud{position:relative;right:auto;bottom:auto;transform:none;transform-origin:initial;margin-top:22px;width:190px;max-width:100%;}
+@media(max-width:600px){.hero-copy .hero-hud{width:180px;margin-top:18px}}
